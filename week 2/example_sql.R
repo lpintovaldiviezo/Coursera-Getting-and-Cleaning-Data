@@ -1,0 +1,20 @@
+##List databases
+ucscDb <- dbConnect(MySQL(), user = "genome", host = "genome-mysql.cse.ucsc.edu")
+result <- dbGetQuery(ucscDb, "show databases;")
+dbDisconnect(ucscDb)
+##List Tables
+hg19 <- dbConnect(MySQL(), user = "genome", db = "hg19",
+		host = "genome-mysql.cse.ucsc.edu")
+allTables <- dbListTables(hg19)
+length(allTables)
+##List Fields
+dbListFields(hg19,"affyU133Plus2")
+##Query
+dbGetQuery(hg19, "select count(*) from affyU133Plus2")
+##read table
+affyData <- dbReadTable(hg19, "affyU133Plus2")
+head(affydata)
+##Query
+query <- dbSendQuery(hg19, "Select * from affyU133Plus2 where misMatches between 1 and 3")
+affyMis <- fetch(query,n=10); quantile(affyMis$misMatches)
+dbClearResult(query);
