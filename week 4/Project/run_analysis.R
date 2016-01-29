@@ -30,7 +30,7 @@ names(join.label) <- "activity"
 names(join.subject) <- "subject"
 ##Join all parts to get the clean data
 newData <- cbind(join.subject, join.label, join.data)
-write.table(newData, "clean_data.txt")
+write.table(newData, "clean_data.txt", row.name=FALSE)
 ##From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 tidy.data <- aggregate(. ~ subject + activity, newData, mean)
-write.table(tidy.data, "tidy.data.txt")
+write.table(tidy.data, "tidy_data.txt", row.name=FALSE)
